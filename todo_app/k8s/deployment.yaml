@@ -16,6 +16,9 @@ spec:
       - name: todo-app
         image: emmanuelben/todo_app:latest
         imagePullPolicy: Never
+        env:
+        - name: PORT
+          value: "3000"
         resources:
           requests:
             memory: "64Mi"
