@@ -13,3 +13,5 @@ spec:
             name: log-output-svc
             port:
               number: 5001
+
+#ingress for log-output service              
