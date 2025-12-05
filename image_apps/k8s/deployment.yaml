@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-apps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: image-apps
+  template:
+    metadata:
+      labels:
+        app: image-apps
+    spec:
+      volumes:
+      - name: shared-files
+        emptyDir: {}
+      containers:
+      - name: image-finder
+        image: emmanuelben/image-finder:latest
+        imagePullPolicy: Never
+        volumeMounts:
+        - name: shared-files
+          mountPath: /usr/src/app/files
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+      - name: image-responder
+        image: emmanuelben/image-responder:latest
+        imagePullPolicy: Never
+        env:
+        - name: PORT
+          value: "3001"
+        volumeMounts:
+        - name: shared-files
+          mountPath: /usr/src/app/files
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
