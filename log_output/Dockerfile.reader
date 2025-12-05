@@ -1,0 +1,6 @@
+FROM node:alpine
+WORKDIR /usr/src/app
+COPY reader.js .
+RUN mkdir -p files
+EXPOSE 3000
+CMD ["node", "reader.js"]
