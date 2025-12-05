@@ -59,6 +59,13 @@ const server = http.createServer(async (req, res) => {
             imageBase64 = imageBuffer.toString('base64');
         }
         
+        // Hardcoded todos
+        const todos = [
+            'Learn Kubernetes',
+            'Build a todo app',
+            'Deploy to production'
+        ];
+        
         // Create HTML response
         const html = `
         <!DOCTYPE html>
@@ -68,6 +75,25 @@ const server = http.createServer(async (req, res) => {
             ${imageBase64 ? `<img src="data:image/jpeg;base64,${imageBase64}" style="max-width: 600px;">` : ''}
             <p>${latestEntry}.</p>
             <p>Ping / Pongs: ${count}</p>
+            
+            <h3>Todo App</h3>
+            <input type="text" id="todoInput" maxlength="140" placeholder="Enter todo (max 140 chars)">
+            <button onclick="addTodo()">Send</button>
+            
+            <h4>Todos:</h4>
+            <ul>
+                ${todos.map(todo => `<li>${todo}</li>`).join('')}
+            </ul>
+            
+            <script>
+                function addTodo() {
+                    const input = document.getElementById('todoInput');
+                    if (input.value.trim() && input.value.length <= 140) {
+                        console.log('Todo to add:', input.value);
+                        input.value = '';
+                    }
+                }
+            </script>
         </body>
         </html>
         `;
