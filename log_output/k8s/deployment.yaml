@@ -14,7 +14,8 @@ spec:
     spec:
       volumes:
       - name: shared-logs
-        emptyDir: {}
+        persistentVolumeClaim:
+            claimName: deployment-pv-claim
       containers:
       - name: log-writer
         image: emmanuelben/log-writer:latest

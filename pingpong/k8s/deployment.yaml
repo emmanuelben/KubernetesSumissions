@@ -7,15 +7,24 @@ spec:
   selector:
     matchLabels:
       app: pingpong
+
   template:
+    
     metadata:
       labels:
         app: pingpong
     spec:
+      volumes:
+      - name: shared-logs
+        persistentVolumeClaim:
+            claimName: deployment-pv-claim
       containers:
       - name: pingpong
         image: emmanuelben/pingpong:latest
         imagePullPolicy: Never
+        volumeMounts:
+        - name: shared-logs
+          mountPath: /usr/src/app/files
         resources:
           requests:
             memory: "64Mi"
